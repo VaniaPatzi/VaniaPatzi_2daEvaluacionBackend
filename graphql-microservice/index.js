@@ -12,7 +12,7 @@ const PORT = 4002;
 let sessionToken = null;
 
 app.get("/", (req, res) => {
-  res.send("✅ Bienvenido. Usa POST /login primero.");
+  res.send(" Bienvenido. Usa POST /login primero.");
 });
 
 app.post("/login", async (req, res) => {
@@ -24,13 +24,13 @@ app.post("/login", async (req, res) => {
     res.json({ token: sessionToken });
   } catch (error) {
     sessionToken = null;
-    res.status(401).json({ error: "❌ Usuario o contraseña incorrectos" });
+    res.status(401).json({ error: "Usuario o contraseña incorrectos" });
   }
 });
 
 const requireLogin = (req, res, next) => {
   if (!sessionToken) {
-    return res.status(403).json({ error: "🔒 Debes iniciar sesión en /login primero" });
+    return res.status(403).json({ error: " Debes iniciar sesión en /login primero" });
   }
   next();
 };
@@ -66,7 +66,7 @@ app.get("/films", requireLogin, async (req, res) => {
     const films = await getFilms();
     res.json(films);
   } catch (error) {
-    console.error("❌ Error en /films:", error.message);
+    console.error("Error en /films:", error.message);
     res.status(500).json({ error: "Error al obtener películas" });
   }
 });
@@ -117,11 +117,11 @@ app.get("/film-stats", requireLogin, async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Error en /film-stats:", error.message);
-    res.status(500).json({ error: "Error al obtener estadísticas extendidas" });
+    console.error("Error en /film-stats:", error.message);
+    res.status(500).json({ error: "Error al obtener estadísticas" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`📡 Microservicio extendido corriendo en http://localhost:${PORT}`);
+  console.log(` Microservicio corriendo en http://localhost:${PORT}`);
 });
